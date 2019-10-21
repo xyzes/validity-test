@@ -52,16 +52,35 @@ public class Utils {
             if (right_row > left_row) {
               String first_name_RIGHT = right.get(1);
               String last_name_RIGHT = right.get(2);
+              /**
+               * The following conditional statements contain the logic for finding duplicates.
+               * Originally only one helper was called, which changed the has_match variable to
+               * true if duplicate was found. However, by assuming the variable to be true, it is
+               * possible to add many other comparisons as else if statements. The variable is then
+               * set to false if none of those conditions are met.
+               */
+              has_match = true; // <--- NEW: assume true, only change back if there is no match.
               // This block checks if the first name and last name match:
               if (this.nameMatch(first_name_LEFT, first_name_RIGHT,
                   last_name_LEFT, last_name_RIGHT)){
-                System.out.println("NAME MATCH");
+                // System.out.println("NAME MATCH");
                 this.dupes = this.dupes + "<li>" + left.toString() + "</li>"
                     + "<li>" + right.toString() + "</li>";
                 // If the names match, set the flag to true
-                has_match = true;
                 hasMatch.add(left_row); // <--- Prevents from adding the record to non-dupes
                 hasMatch.add(right_row); // <--- Prevents from adding the target to non-dupes
+              }
+              // This block checks if e-mails match:
+              else if (this.emailMatch(left.get(4), right.get(4))){
+                // TODO: Find a way to remove duplicate code without sacrificing expandability
+                // Do the same as previous block if matches:
+                this.dupes = this.dupes + "<li>" + left.toString() + "</li>"
+                    + "<li>" + right.toString() + "</li>";
+                hasMatch.add(left_row); // <--- Prevents from adding the record to non-dupes
+                hasMatch.add(right_row); // <--- Prevents from adding the target to non-dupes
+              }
+              else {
+                has_match = false;
               }
             }
             right_row++;
@@ -87,12 +106,13 @@ public class Utils {
         && this.levenshtein.apply(last_L, last_R) <= 2;
     boolean metaphone = this.metaphone.isDoubleMetaphoneEqual(first_L, first_R)
         && this.levenshtein.apply(last_L, last_R) <= 2;
-    if (first_L.equals("Kale")) {
-      System.out.println(first_L + last_L + " " + first_R + last_R);
-      System.out.println(levenshtein || metaphone);
-    }
     /*System.out.println(first_L + last_L + " " + first_R + last_R);
     System.out.println(levenshtein || metaphone);*/
     return levenshtein || metaphone;
+  }
+
+  private boolean emailMatch(String email_L, String email_R) {
+    return this.levenshtein.apply(email_L, email_R) <= 3
+        || this.metaphone.isDoubleMetaphoneEqual(email_L, email_R);
   }
 }
