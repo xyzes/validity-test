@@ -22,7 +22,7 @@ import org.apache.commons.text.similarity.LevenshteinDistance;
 public class Utils {
 
   // PATH to data being used for the web application
-  private String file = "./data/normal.csv"; // <--- Change for different file
+  private String file = "./data/advanced.csv"; // <--- Change for different file
   // String dupes stores entries that are potential duplicates
   public String dupes = "";
   // String clear stores entries that are not potential duplicates
