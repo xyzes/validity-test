@@ -8,6 +8,10 @@ public class DuplicatesApplicationController {
 
     @RequestMapping("/")
     public String index() {
-        return "Hello, world!";
+        // Stores variables containing duplicates & non-duplicates
+        Utils data = new Utils();
+        data.findDuplicates(); // <--- Calls Utils.findDuplicates
+        return "<p>Potential duplicates</p><ul>" + data.dupes +
+            "</ul><p>Non-duplicates</p><ul>" + data.clear + "</ul>";
     }
 }
