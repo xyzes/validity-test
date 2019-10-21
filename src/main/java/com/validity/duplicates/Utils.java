@@ -14,6 +14,11 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.codec.language.DoubleMetaphone;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 
+/**
+ * Utils class contains function to find duplicates in a CSV file and variables
+ * to store duplicates and non-duplicates as HTML list items. These variables are
+ * later accessed by DuplicatesApplicationController.
+ */
 public class Utils {
 
   // PATH to data being used for the web application
